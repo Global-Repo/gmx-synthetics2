@@ -3,6 +3,7 @@ import * as keys from "../../utils/keys";
 
 const func = async ({ network }) => {
   const tokenAddress =
+    //TODO Revisar, estas address son de Fuji y Goerli
     network.name === "avalancheFuji"
       ? "0x3Bd8e00c25B12E6E60fc8B6f1E1E2236102073Ca"
       : "0xCcF73F4Dcbbb573296BFA656b754Fe94BB957d62";
@@ -16,7 +17,7 @@ const func = async ({ network }) => {
 func.tags = ["AddVirtualTokenIdToBtcMarketsTestnet"];
 func.id = "AddVirtualTokenIdToBtcMarketsTestnet";
 func.skip = ({ network }) => {
-  return network.name !== "avalancheFuji" && network.name !== "arbitrumGoerli";
+  return network.name !== "avalancheFuji" && network.name !== "arbitrumGoerli" && network.name !== "bscTest";
 };
 
 export default func;

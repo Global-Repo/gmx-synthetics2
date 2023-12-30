@@ -44,7 +44,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
     MARKET_KEEPER: testnetAdmins,
     FROZEN_ORDER_KEEPER: testnetAdmins,
   };
-
+//NETWORKS
   const config: {
     [network: string]: RolesConfig;
   } = {
@@ -158,6 +158,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
     },
     arbitrumGoerli: testnetConfig,
     avalancheFuji: testnetConfig,
+    bscTest: testnetConfig,
   };
 
   return config[hre.network.name];

@@ -18,7 +18,7 @@ const stablecoinPrices = {
 
 function getTickersUrl() {
   const networkName = hre.network.name;
-
+  //NETWORKS
   if (networkName === "arbitrum") {
     return "https://arbitrum-api.gmxinfra.io/prices/tickers";
   } else if (networkName === "avalanche") {
@@ -26,6 +26,8 @@ function getTickersUrl() {
   } else if (networkName === "arbitrumGoerli") {
     return "https://gmx-synthetics-api-arb-goerli-4vgxk.ondigitalocean.app/prices/tickers";
   } else if (networkName === "avalancheFuji") {
+    return "https://synthetics-api-avax-fuji-upovm.ondigitalocean.app/prices/tickers";
+  } else if (networkName === "bscTest") {
     return "https://synthetics-api-avax-fuji-upovm.ondigitalocean.app/prices/tickers";
   } else {
     throw new Error(`Unsupported network: ${networkName}`);

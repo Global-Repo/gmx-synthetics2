@@ -43,7 +43,7 @@ export type TestTokenConfig = {
 
 export type TokenConfig = SyntheticTokenConfig | RealTokenConfig | TestTokenConfig;
 export type TokensConfig = { [tokenSymbol: string]: TokenConfig };
-
+//NETWORKS
 const config: {
   [network: string]: TokensConfig;
 } = {

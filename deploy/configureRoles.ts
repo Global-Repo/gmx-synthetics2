@@ -9,14 +9,15 @@ import { grantRoleIfNotGranted, revokeRoleIfGranted } from "../utils/role";
 //     },
 //   ],
 // };
-
+//NETWORKS
 const rolesToRemove = {
   hardhat: [],
   arbitrum: [],
   avalanche: [],
   avalancheFuji: [],
   arbitrumGoerli: [],
-  avalancheFuji: [],
+  bsc: [],
+  bscTest: [],
 };
 
 const func = async ({ gmx, network }) => {

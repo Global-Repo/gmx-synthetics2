@@ -1,4 +1,3 @@
-import "@nomicfoundation/hardhat-foundry";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -29,48 +28,34 @@ const getRpcUrl = (network) => {
     arbitrumGoerli: "https://goerli-rollup.arbitrum.io/rpc",
     avalancheFuji: "https://api.avax-test.network/ext/bc/C/rpc",
     snowtrace: "https://api.avax.network/ext/bc/C/rpc",
+    bsc: "https://bsc-dataseed.binance.org/",
+    bscTest: "https://data-seed-prebsc-1-s1.binance.org:8545",
   };
 
-  let rpc = defaultRpcs[network];
+  return defaultRpcs[network];
+};
 
-  const filepath = path.join("./.rpcs.json");
-  if (fs.existsSync(filepath)) {
-    const data = JSON.parse(fs.readFileSync(filepath).toString());
-    if (data[network]) {
-      rpc = data[network];
-    }
+const getEnvAccountsBeGlo = () => {
+  if (!process.env.ACCOUNT_MNEMONIC) {
+    throw new Error("Invalid mnemonic");
   }
 
-  return rpc;
+  const wallet = ethers.Wallet.fromMnemonic(process.env.ACCOUNT_MNEMONIC);
+  return [wallet.privateKey];
 };
 
 const getEnvAccounts = () => {
-  const { ACCOUNT_KEY, ACCOUNT_KEY_FILE } = process.env;
+  const { ACCOUNT_KEY, ACCOUNT_MNEMONIC } = process.env;
 
   if (ACCOUNT_KEY) {
     return [ACCOUNT_KEY];
   }
 
-  if (ACCOUNT_KEY_FILE) {
-    const filepath = path.join("./keys/", ACCOUNT_KEY_FILE);
-    const data = JSON.parse(fs.readFileSync(filepath));
-    if (!data) {
-      throw new Error("Invalid key file");
-    }
-
-    if (data.key) {
-      return [data.key];
-    }
-
-    if (!data.mnemonic) {
-      throw new Error("Invalid mnemonic");
-    }
-
-    const wallet = ethers.Wallet.fromMnemonic(data.mnemonic);
-    return [wallet.privateKey];
+  if (!ACCOUNT_MNEMONIC) {
+    throw new Error("Invalid mnemonic");
   }
-
-  return [];
+  const wallet = ethers.Wallet.fromMnemonic(ACCOUNT_MNEMONIC);
+  return [wallet.privateKey];
 };
 
 const config: HardhatUserConfig = {
@@ -96,6 +81,31 @@ const config: HardhatUserConfig = {
     },
     localhost: {
       saveDeployments: true,
+    },
+    bscTest: {
+      // url: "https://endpoints.omniatech.io/v1/bsc/testnet/public",
+      url: getRpcUrl("bscTest"),
+      chainId: 97,
+      //accounts: {mnemonic: mnemonicDep},
+      accounts: getEnvAccounts(),
+      verify: {
+        etherscan: {
+          apiUrl: "https://api-testnet.bscscan.com/api",
+          apiKey: process.env.BSC_API_KEY,
+        },
+      },
+    },
+    bsc: {
+      url: getRpcUrl("bsc"),
+      chainId: 56,
+      //accounts: {mnemonic: mnemonicDep},
+      accounts: getEnvAccounts(),
+      verify: {
+        etherscan: {
+          apiUrl: "https://api.bscscan.com/api",
+          apiKey: process.env.BSC_API_KEY,
+        },
+      },
     },
     arbitrum: {
       url: getRpcUrl("arbitrum"),
@@ -162,23 +172,15 @@ const config: HardhatUserConfig = {
       arbitrumGoerli: process.env.ARBISCAN_API_KEY,
       avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY,
       snowtrace: "snowtrace", // apiKey is not required, just set a placeholder
+      bscTest: process.env.BSC_API_KEY,
+      bsc: process.env.BSC_API_KEY,
     },
-    customChains: [
-      {
-        network: "snowtrace",
-        chainId: 43114,
-        urls: {
-          apiURL: "https://api.routescan.io/v2/network/mainnet/evm/43114/etherscan",
-          browserURL: "https://avalanche.routescan.io",
-        },
-      },
-    ],
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS ? true : false,
   },
   namedAccounts: {
-    deployer: 0,
+    deployer: 0, //TODO PONER DEPLOYER ADDRESS
   },
   mocha: {
     timeout: 100000000,

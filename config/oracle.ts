@@ -45,7 +45,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleCo
   if (!network.live) {
     testSigners = (await hre.ethers.getSigners()).slice(10).map((signer) => signer.address);
   }
-
+//NETWORKS
   const config: { [network: string]: OracleConfig } = {
     localhost: {
       realtimeFeedVerifier: ethers.constants.AddressZero,
@@ -324,6 +324,41 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleCo
           priceFeed: {
             // this is USDT price feed, there is no USDC feed on Avalanche Fuji
             address: "0x7898AcCC83587C3C55116c5230C17a6Cd9C71bad",
+            decimals: 8,
+            heartbeatDuration: 3 * 24 * 60 * 60,
+          },
+        },
+      },
+    },
+
+    bscTest: {
+      realtimeFeedVerifier: "0x5f64394a2Ab3AcE9eCC071568Fc552489a8de7AF", //TODO revisar ya que seguro que está mal, puede que haya que deployar un verifier
+      signers: ["0xFb11f15f206bdA02c224EDC744b0E50E46137046", "0x23247a1A80D01b9482E9d734d2EB780a3b5c8E6c"], //TODO revisar ya que seguro que está mal
+      maxOraclePriceAge: 5 * 60,
+      maxRefPriceDeviationFactor: decimalToFloat(5, 1), // 50%
+      minOracleBlockConfirmations: 255,
+      minOracleSigners: 1,
+
+      // price feeds https://docs.chain.link/data-feeds/price-feeds/addresses?network=avalanche#Avalanche%20Testnet
+      tokens: {
+        // using the same price feed for all stablecoins since Chainlink has only USDT feed on Avalanche Fuji
+        USDC: {
+          priceFeed: {
+            address: "0x90c069C4538adAc136E051052E14c1cD799C41B7",
+            decimals: 8,
+            heartbeatDuration: 3 * 24 * 60 * 60,
+          },
+        },
+        USDT: {
+          priceFeed: {
+            address: "0xEca2605f0BCF2BA5966372C99837b1F182d3D620",
+            decimals: 8,
+            heartbeatDuration: 3 * 24 * 60 * 60,
+          },
+        },
+        DAI: {
+          priceFeed: {
+            address: "0xE4eE17114774713d2De0eC0f035d4F7665fc025D",
             decimals: 8,
             heartbeatDuration: 3 * 24 * 60 * 60,
           },

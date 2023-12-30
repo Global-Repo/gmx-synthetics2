@@ -3,6 +3,12 @@ import { Reader } from "../typechain-types";
 import got from "got";
 import { toLoggableObject } from "../utils/print";
 const ethers = hre.ethers;
+//NETWORKS
+function getBscTestValues() {
+  return {
+    oracleApi: "https://synthetics-api-avax-fuji-upovm.ondigitalocean.app/",
+  };
+}
 
 function getAvalancheFujiValues() {
   return {
@@ -30,6 +36,8 @@ function getValues() {
     return getArbibtrumGoerliValues();
   } else if (hre.network.name === "arbitrum") {
     return getArbitrumValues();
+  } else if (hre.network.name === "bscTest") {
+    return getBscTestValues();
   }
   throw new Error("Unsupported network");
 }

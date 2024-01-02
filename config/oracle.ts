@@ -40,12 +40,13 @@ export type OracleConfig = {
 
 export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleConfig> {
   const network = hre.network;
+  console.log("OracleConfig.network", network);
 
   let testSigners: string[];
   if (!network.live) {
     testSigners = (await hre.ethers.getSigners()).slice(10).map((signer) => signer.address);
   }
-//NETWORKS
+  //NETWORKS
   const config: { [network: string]: OracleConfig } = {
     localhost: {
       realtimeFeedVerifier: ethers.constants.AddressZero,
@@ -367,12 +368,15 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleCo
     },
   };
 
+  console.log("OracleConfig.config", config);
+
   const oracleConfig: OracleConfig = config[hre.network.name];
   if (!oracleConfig.tokens) {
     oracleConfig.tokens = {};
   }
-
+  console.log("OracleConfig.tokens before");
   const tokens = await hre.gmx.getTokens();
+  console.log("OracleConfig.tokens after", tokens);
 
   // to make sure all tokens have an oracle type so oracle deployment/configuration script works correctly
   for (const tokenSymbol of Object.keys(tokens)) {
@@ -381,6 +385,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleCo
     }
   }
 
+  console.log("OracleConfig.tokens after2");
   // validate there are corresponding tokens for price feeds
   for (const tokenSymbol of Object.keys(oracleConfig.tokens)) {
     if (!tokens[tokenSymbol]) {
@@ -391,6 +396,6 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<OracleCo
       oracleConfig.tokens[tokenSymbol].oracleType = TOKEN_ORACLE_TYPES.DEFAULT;
     }
   }
-
+  console.log("OracleConfig.oracleConfig", oracleConfig);
   return oracleConfig;
 }

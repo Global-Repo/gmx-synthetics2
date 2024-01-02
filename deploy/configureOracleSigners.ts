@@ -5,9 +5,14 @@ import { setUintIfDifferent } from "../utils/dataStore";
 
 const func = async ({ deployments, getNamedAccounts, gmx }: HardhatRuntimeEnvironment) => {
   const { read, execute, log } = deployments;
+  log("configuring oracle signers");
   const { deployer } = await getNamedAccounts();
+  console.log("deployer", deployer);
+  console.log("gmx", gmx.getOracle);
   const oracleConfig = await gmx.getOracle();
+  log("oracle config", oracleConfig);
   const oracleSigners = oracleConfig.signers.map((s) => ethers.utils.getAddress(s));
+  log("oracle signers", oracleSigners.join(","));
 
   const existingSignersCount = await read("OracleStore", "getSignerCount");
   const existingSigners = await read("OracleStore", "getSigners", 0, existingSignersCount);

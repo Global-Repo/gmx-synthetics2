@@ -367,6 +367,31 @@ const config: {
       synthetic: true,
     },
   },
+  bscTest: {
+    USDT: {
+      decimals: 18,
+      transferGasLimit: 200 * 1000,
+      address: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+      realtimeFeedId: "0x12be1859ee43f46bab53750915f20855f54e891f88ddd524f26a72d6f4deed1d",
+      realtimeFeedDecimals: 8,
+    },
+    USDC: {
+      decimals: 18,
+      transferGasLimit: 200 * 1000,
+      address: "0x64544969ed7EBf5f083679233325356EbE738930",
+    },
+    DAI: {
+      decimals: 18,
+      transferGasLimit: 200 * 1000,
+      address: "0xEC5dCb5Dbf4B114C9d0F65BcCAb49EC54F6A0867",
+    },
+    WBNB: {
+      decimals: 18,
+      wrappedNative: true,
+      transferGasLimit: 200 * 1000,
+      address: "0x094616F0BdFB0b526bD735Bf66Eca0Ad254ca81F",
+    },
+  },
   // token addresses are retrieved in runtime for hardhat and localhost networks
   hardhat: {
     WETH: {

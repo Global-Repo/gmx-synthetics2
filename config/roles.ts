@@ -32,11 +32,11 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
   };
 
   const testnetAdmins = {
-    "0xC84f3398eDf6336E1Ef55b50Ca3F9f9f96B8b504": true,
-    "0xFb11f15f206bdA02c224EDC744b0E50E46137046": true,
+    "0x1aa4989744F6397CDAcAae038623223F0Fd2A422": true,
   };
 
   const testnetConfig = {
+    //ROLE_ADMIN: testnetAdmins,
     CONTROLLER: testnetAdmins,
     ORDER_KEEPER: testnetAdmins,
     ADL_KEEPER: testnetAdmins,
@@ -44,7 +44,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
     MARKET_KEEPER: testnetAdmins,
     FROZEN_ORDER_KEEPER: testnetAdmins,
   };
-//NETWORKS
+  //NETWORKS
   const config: {
     [network: string]: RolesConfig;
   } = {

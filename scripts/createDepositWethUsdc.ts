@@ -17,7 +17,7 @@ async function getValues(): Promise<{
     };
   } else if (hre.network.name === "localhost") {
     return {
-      wnt: await ethers.getContract("WETH"),
+      wnt: await ethers.getContractFactory("WETH"),
     };
   }
 
@@ -26,12 +26,13 @@ async function getValues(): Promise<{
 
 async function main() {
   console.log("run createDepositWethUsdc");
-  const marketFactory = await ethers.getContract("MarketFactory");
-  const roleStore = await ethers.getContract("RoleStore");
-  const dataStore = await ethers.getContract("DataStore");
-  const depositVault = await ethers.getContract("DepositVault");
-  const exchangeRouter: ExchangeRouter = await ethers.getContract("ExchangeRouter");
-  const router = await ethers.getContract("Router");
+  const marketFactory = await ethers.getContractFactory("MarketFactory");
+  console.log("run createDepositWethUsdc");
+  const roleStore = await ethers.getContractFactory("RoleStore");
+  const dataStore = await ethers.getContractFactory("DataStore");
+  const depositVault = await ethers.getContractFactory("DepositVault");
+  const exchangeRouter: ExchangeRouter = await ethers.getContractFactory("ExchangeRouter");
+  const router = await ethers.getContractFactory("Router");
 
   const { wnt } = await getValues();
 

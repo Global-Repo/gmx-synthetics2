@@ -180,7 +180,7 @@ const config: HardhatUserConfig = {
     enabled: process.env.REPORT_GAS ? true : false,
   },
   namedAccounts: {
-    deployer: 0, //TODO PONER DEPLOYER ADDRESS
+    deployer: "0x1aa4989744F6397CDAcAae038623223F0Fd2A422",
   },
   mocha: {
     timeout: 100000000,

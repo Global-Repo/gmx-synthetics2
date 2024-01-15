@@ -30,6 +30,7 @@ const getRpcUrl = (network) => {
     snowtrace: "https://api.avax.network/ext/bc/C/rpc",
     bsc: "https://bsc-dataseed.binance.org/",
     bscTest: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    opBnb: "https://opbnb-testnet-rpc.bnbchain.org",
   };
 
   return defaultRpcs[network];
@@ -90,7 +91,20 @@ const config: HardhatUserConfig = {
       accounts: getEnvAccounts(),
       verify: {
         etherscan: {
-          apiUrl: "https://api-testnet.bscscan.com/api",
+          apiUrl: "https://api-testnet.bscscan.com",
+          apiKey: process.env.BSC_API_KEY,
+        },
+      },
+    },
+    opBnb: {
+      // url: "https://endpoints.omniatech.io/v1/bsc/testnet/public",
+      url: getRpcUrl("opBnb"),
+      chainId: 5611,
+      //accounts: {mnemonic: mnemonicDep},
+      accounts: getEnvAccounts(),
+      verify: {
+        etherscan: {
+          apiUrl: "https://api-opbnb-testnet.bscscan.com",
           apiKey: process.env.BSC_API_KEY,
         },
       },
@@ -173,6 +187,7 @@ const config: HardhatUserConfig = {
       avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY,
       snowtrace: "snowtrace", // apiKey is not required, just set a placeholder
       bscTest: process.env.BSC_API_KEY,
+      opBnb: process.env.BSC_API_KEY,
       bsc: process.env.BSC_API_KEY,
     },
   },

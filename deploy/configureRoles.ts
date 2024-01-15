@@ -18,6 +18,7 @@ const rolesToRemove = {
   arbitrumGoerli: [],
   bsc: [],
   bscTest: [],
+  opBnb: [],
 };
 
 const func = async ({ gmx, network }) => {

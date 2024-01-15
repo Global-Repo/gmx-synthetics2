@@ -108,6 +108,9 @@ export default async function ({ network }: HardhatRuntimeEnvironment) {
     bscTest: {
       requestExpirationBlockAge: 100, // about 5 minutes assuming 1 block per 2 seconds
     },
+    opBnb: {
+      requestExpirationBlockAge: 100, // about 5 minutes assuming 1 block per 2 seconds
+    },
   }[network.name];
 
   if (!networkConfig) {

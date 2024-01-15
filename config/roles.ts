@@ -31,6 +31,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
     },
   };
 
+  // ROLES FOR TESTNETS. TODO. @alfaori Wallet
   const testnetAdmins = {
     "0x1aa4989744F6397CDAcAae038623223F0Fd2A422": true,
   };
@@ -159,6 +160,7 @@ export default async function (hre: HardhatRuntimeEnvironment): Promise<RolesCon
     arbitrumGoerli: testnetConfig,
     avalancheFuji: testnetConfig,
     bscTest: testnetConfig,
+    opBnb: testnetConfig,
   };
 
   return config[hre.network.name];

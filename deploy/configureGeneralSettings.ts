@@ -3,7 +3,9 @@ import * as keys from "../utils/keys";
 import { setAddressIfDifferent, setUintIfDifferent, setBoolIfDifferent } from "../utils/dataStore";
 
 const func = async ({ gmx }: HardhatRuntimeEnvironment) => {
+  console.log("roles:", gmx);
   const generalConfig = await gmx.getGeneral();
+  console.log("generalConfig:", generalConfig);
 
   await setAddressIfDifferent(keys.FEE_RECEIVER, generalConfig.feeReceiver, "fee receiver");
   await setAddressIfDifferent(keys.HOLDING_ADDRESS, generalConfig.holdingAddress, "holding address");
